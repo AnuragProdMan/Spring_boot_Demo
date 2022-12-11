@@ -2,6 +2,7 @@ package com.example.jpa.learn.learning.controller;
 
 import com.example.jpa.learn.learning.dto.CustomerDto;
 import com.example.jpa.learn.learning.entity.Customer;
+import com.example.jpa.learn.learning.exception.WrongHeaderException;
 import com.example.jpa.learn.learning.service.CustomerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,11 @@ public class AppController {
         //allCustomers.stream().filter(v -> v.getCompany().equals("HSBC")).collect(Collectors.toList());
         log.info("{}",allCustomers);
         HttpHeaders httpHeaders = new HttpHeaders();
+        //if about not equal then throw exception
+        if(!about.equalsIgnoreCase("rich guy")){
+            //throw exception
+            throw new WrongHeaderException("Wrong header it has to be Anurag Rich Guy");
+        }
         httpHeaders.set("Anurag",about);
         return new ResponseEntity<List<Customer>>(allCustomers,httpHeaders,HttpStatus.OK);
     }
